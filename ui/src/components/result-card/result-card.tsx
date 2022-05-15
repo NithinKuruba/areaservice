@@ -1,11 +1,13 @@
 import { Paper, Grid, IconButton, Tooltip } from '@mui/material';
 import CopyAllRoundedIcon from '@mui/icons-material/CopyAllRounded';
+import { RESULT_CARD_TITLE } from '../../utils/constants';
 
-interface DataProps {
-  name: string;
+export interface ChsaArea {
+  areaCode: string;
+  areaName: string;
 }
 
-const ResultCard: React.FC<DataProps> = (props: DataProps) => {
+const ResultCard: React.FC<ChsaArea> = (props: ChsaArea) => {
   return (
     <div>
       <Paper
@@ -15,28 +17,41 @@ const ResultCard: React.FC<DataProps> = (props: DataProps) => {
           flexDirection: 'row',
         }}
       >
-        <Grid
-          container
-          direction="row"
-          alignItems="baseline"
-          justifyContent="space-evenly"
-        >
+        <Grid container direction="column">
           <Grid item>
-            <h4>CHSA:</h4>
+            <h3>{RESULT_CARD_TITLE}</h3>
           </Grid>
           <Grid item>
-            <p> {props.name}</p>
+            <div style={{ display: 'flex' }}>
+              <p>
+                <strong>Code:</strong> {props.areaCode}
+              </p>
+              <Tooltip title="copy">
+                <IconButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(props.areaCode);
+                  }}
+                >
+                  <CopyAllRoundedIcon></CopyAllRoundedIcon>
+                </IconButton>
+              </Tooltip>
+            </div>
           </Grid>
           <Grid item>
-            <Tooltip title="copy">
-              <IconButton
-                onClick={() => {
-                  navigator.clipboard.writeText(props.name);
-                }}
-              >
-                <CopyAllRoundedIcon></CopyAllRoundedIcon>
-              </IconButton>
-            </Tooltip>
+            <div style={{ display: 'flex' }}>
+              <p>
+                <strong>Name:</strong> {props.areaName}
+              </p>
+              <Tooltip title="copy">
+                <IconButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(props.areaName);
+                  }}
+                >
+                  <CopyAllRoundedIcon></CopyAllRoundedIcon>
+                </IconButton>
+              </Tooltip>
+            </div>
           </Grid>
         </Grid>
       </Paper>

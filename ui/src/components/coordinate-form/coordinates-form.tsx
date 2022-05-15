@@ -11,13 +11,20 @@ import { useState } from 'react';
 import ResultCard from '../result-card';
 import MyLocationRoundedIcon from '@mui/icons-material/MyLocationRounded';
 import MapRoundedIcon from '@mui/icons-material/MapRounded';
+import * as constants from '../../utils/constants';
+import { ChsaArea } from '../result-card/result-card';
 
 const CoordinateForm: React.FC = () => {
   const [latitude, setLatitude] = useState<string>('');
   const [longitude, setLongitude] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [chsa, setChsa] = useState('');
+  const [chsa, setChsa] = useState<ChsaArea>();
   const { enqueueSnackbar } = useSnackbar();
+
+  const defaultChsaArea = {
+    areaCode: '',
+    areaName: '',
+  };
 
   const onSubmit = async (event: any) => {
     event?.preventDefault();
@@ -34,26 +41,32 @@ const CoordinateForm: React.FC = () => {
         }
       );
       if (!res.ok) {
-        await res
-          .text()
-          .then((data) => {
-            setError(data);
-            setChsa('');
-            return data;
-          })
-          .then((data) =>
-            enqueueSnackbar(data, {
-              variant: 'error',
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'center',
-              },
-            })
-          );
+        let err: string;
+        switch (res.status) {
+          case 400:
+            err = constants.INVALID_LAT_LNG;
+            break;
+          case 502:
+            err = constants.SERVICE_UNAVAILABLE;
+            break;
+          default:
+            err = constants.SOMETHING_WENT_WRONG;
+            break;
+        }
+        setChsa(defaultChsaArea);
+        enqueueSnackbar(err, {
+          variant: 'error',
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center',
+          },
+        });
       } else {
-        await res.text().then((data) => {
-          setChsa(data);
-          setError('');
+        await res.json().then((data) => {
+          setChsa({
+            areaCode: data[constants.AREA_CODE],
+            areaName: data[constants.AREA_NAME],
+          });
         });
       }
     } catch (err) {
@@ -69,8 +82,7 @@ const CoordinateForm: React.FC = () => {
   };
 
   const onReset = () => {
-    setChsa('');
-    setError('');
+    setChsa(defaultChsaArea);
     setLatitude('');
     setLongitude('');
   };
@@ -158,7 +170,7 @@ const CoordinateForm: React.FC = () => {
             Submit
           </Button>
         </div>
-        <div>{chsa && <ResultCard name={chsa} />}</div>
+        <div>{chsa?.areaCode && <ResultCard {...chsa} />}</div>
       </div>
     </Container>
   );

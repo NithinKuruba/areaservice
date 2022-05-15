@@ -50,8 +50,6 @@ services:
     build:
       context: .
       dockerfile: ./ui/Dockerfile
-    environment:
-      AREASERVICE_API_URL: http://areaservice-api:8090/area
     ports:
       - 3000:3000
     restart: on-failure
