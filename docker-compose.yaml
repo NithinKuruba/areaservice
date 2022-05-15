@@ -23,20 +23,37 @@ services:
       - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
     networks:
       - app-net
-  backend:
+  areaservice-api:
     image: areaservice-api
     container_name: areaservice-api
     depends_on:
       - db
     build:
       context: .
-      dockerfile: ./backend/Dockerfile
+      dockerfile: ./api/Dockerfile
     environment:
       <<: *common-variables
       MYSQL_HOST: db
       MYSQL_PORT: 3306
     ports:
       - 8090:8090
+    restart: on-failure
+    networks:
+      - app-net
+
+  areaservice:
+    image: areaservice
+    container_name: areaservice
+    depends_on:
+      - db
+      - areaservice-api
+    build:
+      context: .
+      dockerfile: ./ui/Dockerfile
+    environment:
+      AREASERVICE_API_URL: http://areaservice-api:8090/area
+    ports:
+      - 3000:3000
     restart: on-failure
     networks:
       - app-net
