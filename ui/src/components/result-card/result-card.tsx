@@ -22,10 +22,9 @@ const ResultCard: React.FC<ChsaArea> = (props: ChsaArea) => {
             <h3>{RESULT_CARD_TITLE}</h3>
           </Grid>
           <Grid item>
-            <div style={{ display: 'flex' }}>
-              <p>
-                <strong>Code:</strong> {props.areaCode}
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <strong>Code:</strong>
+              <p style={{ marginLeft: '10px' }}>{props.areaCode}</p>
               <Tooltip title="copy">
                 <IconButton
                   onClick={() => {
@@ -38,10 +37,9 @@ const ResultCard: React.FC<ChsaArea> = (props: ChsaArea) => {
             </div>
           </Grid>
           <Grid item>
-            <div style={{ display: 'flex' }}>
-              <p>
-                <strong>Name:</strong> {props.areaName}
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <strong>Name:</strong>
+              <p style={{ marginLeft: '10px' }}>{props.areaName}</p>
               <Tooltip title="copy">
                 <IconButton
                   onClick={() => {
