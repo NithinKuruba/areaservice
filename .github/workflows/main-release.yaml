@@ -14,7 +14,7 @@ jobs:
   release-on-push:
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ env.REGISTRY_TOKEN }}
     steps:
       - uses: actions/checkout@v2
         with:
