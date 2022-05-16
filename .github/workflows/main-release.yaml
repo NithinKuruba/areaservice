@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  REGISTRY_USERNAME: NithinKuruba
+  REGISTRY_USERNAME: nithinkuruba
 
 jobs:
   release-on-push:
@@ -57,7 +57,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           context: .
           file: ./ui/Dockerfile
-          tags: ${{ env.REGISTRY }}/NithinKuruba/areaservice/areaservice-ui:${{ steps.release.outputs.tag_name }}
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/areaservice/areaservice-ui:${{ steps.release.outputs.tag_name }}
           push: true
           build-args: |
             GITHUB_API_TOKEN=${{ env.GITHUB_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           context: .
           file: ./api/Dockerfile
-          tags: ${{ env.REGISTRY }}/NithinKuruba/areaservice/areaservice-api:${{ steps.release.outputs.tag_name }}
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/areaservice/areaservice-api:${{ steps.release.outputs.tag_name }}
           push: true
           build-args: |
             GITHUB_API_TOKEN=${{ env.GITHUB_TOKEN }}
