@@ -1,4 +1,4 @@
-# Area Service UI 
+# Area Service UI
 
 ## Description
 
@@ -8,15 +8,11 @@ Area Service frontend application built using [NextJS](https://nextjs.org/). The
 
 ### Dependencies
 
-- [Node.js](https://nodejs.org/en/) 
+- [Node.js](https://nodejs.org/en/)
 
 ### Installing
 
 - Run `npm install` from `./ui` directory to download all the dependencies
-- Create `.env.local` under same directory and add below environmental variables
-  ```
-  NEXT_PUBLIC_AREASERVICE_API_URL=http://localhost:8090
-  ```
 
 #### Locally
 
