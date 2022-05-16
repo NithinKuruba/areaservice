@@ -24,6 +24,12 @@ Community Health Service Area (CHSA) locator service helps users know their CHSA
 - Make sure mysql instance is up and running as tests use it
 - Run the command `./gradlew test` to run the unit tests
 
+Note:
+
+- Run `./gradlew init` to initialize gradle wrapper before running any other commands
+
+- To generate new wrapper, run `gradle wrapper` and it will setup gradle wrapper environment
+
 ### Installation
 
 - Run `git clone https://github.com/NithinKuruba/areaservice.git` to save the repository to your workspace
