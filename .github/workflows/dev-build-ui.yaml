@@ -10,7 +10,7 @@ env:
   REGISTRY_USERNAME: nithinkuruba
 
 jobs:
-  release-on-push:
+  build-ui-on-push:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
