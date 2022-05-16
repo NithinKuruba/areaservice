@@ -70,8 +70,7 @@ const CoordinateForm: React.FC = () => {
         });
       }
     } catch (err) {
-      console.log(err);
-      enqueueSnackbar(`Somthing went wrong, please try again later`, {
+      enqueueSnackbar(constants.SERVICE_UNAVAILABLE, {
         variant: 'error',
         anchorOrigin: {
           vertical: 'bottom',
