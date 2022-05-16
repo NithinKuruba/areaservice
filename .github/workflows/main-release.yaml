@@ -7,14 +7,14 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  REGISTRY_TOKEN: ${{ secrets.GHCR_TOKEN }}
+  REGISTRY_USERNAME: NithinKuruba
 
 jobs:
   release-on-push:
     runs-on: ubuntu-latest
     env:
-      REGISTRY: ghcr.io
-      REGISTRY_TOKEN: ${{ secrets.GHCR_TOKEN }}
-      GH_USERNAME: NithinKuruba
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Login to Github Container Registry
         run: |
-          echo "${{ env.REGISTRY_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.GH_USERNAME }} --password-stdin
+          echo "${{ env.REGISTRY_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.REGISTRY_USERNAME }} --password-stdin
 
       - id: release
         uses: rymndhng/release-on-push-action@v0.20.0
