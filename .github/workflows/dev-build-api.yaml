@@ -1,0 +1,68 @@
+name: Build API Image
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  REGISTRY: ghcr.io
+  REGISTRY_USERNAME: nithinkuruba
+
+jobs:
+  release-on-push:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
+    steps:
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/areaservice/areaservice-api
+
+      - name: Set DEPLOY_ID which will deploy a custom deploy to 'dev' environment
+        run: |
+          echo '::set-output name=DEPLOY_ID::${{ steps.docker_meta.outputs.version }}'
+          echo '::set-output name=APP_VERSION::${{ fromJSON(steps.docker_meta.outputs.json).labels['org.opencontainers.image.version'] }}'
+          echo '::set-output name=APP_REVISION::${{ fromJSON(steps.docker_meta.outputs.json).labels['org.opencontainers.image.revision'] }}'
+        id: set-deploy-id
+
+      - name: Get deploy ID
+        run: echo "The DEPLOY_ID is ${{ steps.set-deploy-id.outputs.DEPLOY_ID }}"
+      - uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Login to Github Container Registry
+        run: |
+          echo "${{ env.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.REGISTRY_USERNAME }} --password-stdin
+
+      - uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Area Service API
+        uses: docker/build-push-action@v3
+        with:
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          context: .
+          file: ./api/Dockerfile
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          load: true
+          build-args: |
+            GITHUB_API_TOKEN=${{ env.GITHUB_TOKEN }}
+            APP_VERSION=${{ steps.release.outputs.version }}
+            APP_REVISION=${{ steps.set-deploy-id.outputs.APP_REVISION }}
+
+      - name: Push
+        run: docker push ${{ steps.docker_meta.outputs.tags }}
