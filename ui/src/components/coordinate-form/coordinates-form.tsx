@@ -120,6 +120,7 @@ const CoordinateForm: React.FC = () => {
             onChange={(val) => setLatitude(val.target.value)}
             value={latitude}
             sx={{ marginRight: 2 }}
+            inputProps={{ 'data-testid': 'input-latitude' }}
           />
           <TextField
             required
@@ -129,6 +130,7 @@ const CoordinateForm: React.FC = () => {
             type="number"
             onChange={(val) => setLongitude(val.target.value)}
             value={longitude}
+            inputProps={{ 'data-testid': 'input-longitude' }}
           />
           <Tooltip title="use current location">
             <IconButton onClick={insertCurrentLocation}>
@@ -155,6 +157,7 @@ const CoordinateForm: React.FC = () => {
               '&:hover': { backgroundColor: 'red' },
             }}
             onClick={onReset}
+            data-testid="btn-reset"
           >
             Reset
           </Button>
@@ -166,6 +169,7 @@ const CoordinateForm: React.FC = () => {
             }}
             onClick={onSubmit}
             disabled={!latitude || !longitude}
+            data-testid="btn-submit"
           >
             Submit
           </Button>

@@ -13,10 +13,16 @@ Area Service frontend application built using [NextJS](https://nextjs.org/). The
 ### Installing
 
 - Run `npm install` from `./ui` directory to download all the dependencies
+- Create `.env.local` under same directory and add below environmental variables
+  ```
+  NEXT_PUBLIC_AREASERVICE_API_URL=http://localhost:8090
+  ```
 
 #### Locally
 
 - Run `npm run dev` to start node server for development purposes
+
+- Run `npm run test` to run the jest unit tests
 
 - Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

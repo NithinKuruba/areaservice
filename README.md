@@ -11,7 +11,20 @@ Community Health Service Area (CHSA) locator service helps users know their CHSA
 - Docker/Docker-Compose
 - MySQL Workbench (Optional)
 
-### Installing
+### Unit Tests
+
+#### UI 
+
+- Navigate to folder `./ui`
+- Run the command `npm run test` to run the unit tests
+
+#### API
+
+- Navigate to folder `./api`
+- Make sure mysql instance is up and running as tests use it
+- Run the command `./gradlew test` to run the unit tests
+
+### Installation
 
 - Run `git clone https://github.com/NithinKuruba/areaservice.git` to save the repository to your workspace
 
@@ -19,6 +32,8 @@ Community Health Service Area (CHSA) locator service helps users know their CHSA
   - Optionally use flag `-d` to run the docker compose in the background
 
 - Access the application at `http://localhost:3000`
+
+- Please allow upto ~2 mins for the API to be ready for accepting requests
 
 ### Connecting to database to view the request count
 
@@ -29,7 +44,7 @@ Community Health Service Area (CHSA) locator service helps users know their CHSA
 - Run sql query `select count(*) from request;` to fetch the number of requests made to the areaservice API
 - Run `exit` twice to disconnect from mysql and to exit the interactive shell
 
-### Un-installing
+### Un-installation
 
 - Run `docker-compose down` from the root directory
 
