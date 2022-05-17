@@ -79,6 +79,12 @@ jobs:
           cd api
           ./gradlew test
 
+      - name: Upload API Unit Test Results Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: ${{ github.workspace }}/api/build/reports
+
       - name: Login to Github Container Registry
         run: |
           echo "${{ env.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.REGISTRY_USERNAME }} --password-stdin
