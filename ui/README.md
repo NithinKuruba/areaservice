@@ -18,7 +18,7 @@ Area Service frontend application built using [NextJS](https://nextjs.org/). The
 
 - Run `npm run dev` to start node server for development purposes
 
-- Run `npm run test` to run the jest unit tests
+- Run `npm run test:coverage` to run the jest unit tests and populate coverage
 
 - Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -35,6 +35,19 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 6.8.3
+
+      - name: Execute Gradle Unit Tests
+        run: ./gradlew test
+
       - name: Login to Github Container Registry
         run: |
           echo "${{ env.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.REGISTRY_USERNAME }} --password-stdin

@@ -35,6 +35,20 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
+      - uses: actions/setup-node@main
+        with:
+          node-version: "16"
+      - name: Install dependencies
+        run: npm ci
+      - name: Unit tests w/ coverage
+        run: npm run test:coverage
+
+      - name: Upload UI Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage
+          path: ${{ github.workspace }}/ui/coverage
+
       - name: Login to Github Container Registry
         run: |
           echo "${{ env.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ env.REGISTRY_USERNAME }} --password-stdin
