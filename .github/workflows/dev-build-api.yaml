@@ -11,6 +11,10 @@ on:
 env:
   REGISTRY: ghcr.io
   REGISTRY_USERNAME: nithinkuruba
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: admin
+  MYSQL_DATABASE: healthservice
+  MYSQL_HOST: localhost
 
 jobs:
   build-api-on-push:
@@ -21,10 +25,10 @@ jobs:
       mysql:
         image: bitnami/mysql:8.0.20
         env:
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: admin
-          MYSQL_DATABASE: healthservice
-          MYSQL_HOST: localhost
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.MYSQL_DATABASE }}
+          MYSQL_HOST: ${{ env.MYSQL_HOST }}
           MYSQL_ROOT_PASSWORD: root
           MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
         ports:
@@ -70,11 +74,11 @@ jobs:
 
       - name: Execute Gradle Unit Tests
         env:
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: admin
-          MYSQL_DATABASE: healthservice
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.MYSQL_DATABASE }}
+          MYSQL_HOST: ${{ env.MYSQL_HOST }}
           MYSQL_PORT: 3306
-          MYSQL_HOST: localhost
         run: |
           cd api
           ./gradlew test
