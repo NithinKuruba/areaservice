@@ -13,10 +13,12 @@ Community Health Service Area (CHSA) locator service helps users know their CHSA
 
 ### Unit Tests
 
+Unit tests can be run locally and also being run using git actions when new code is pushed to dev branch
+
 #### UI
 
 - Navigate to folder `./ui`
-- Run the command `npm run test` to run the unit tests
+- Run the command `npm run test:coverage` to run the unit tests and generate coverage report
 
 #### API
 
