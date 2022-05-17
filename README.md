@@ -53,7 +53,7 @@ Note:
 - Enter password `admin` upon the prompt
 - Run `USE healthservice` to select to the database
 - Run sql query `select count(*) from request;` to fetch the number of requests made to the areaservice API
-- Run sql query `select count(*) from response;` to fetch the number of requests made to the areaservice API
+- Run sql query `select count(*) from response;` to fetch the number of responses sent back by the areaservice API
 - Run `exit` twice to disconnect from mysql and to exit the interactive shell
 
 #### View recorded CHSA area code and name
