@@ -24,7 +24,7 @@ jobs:
           MYSQL_USER: admin
           MYSQL_PASSWORD: admin
           MYSQL_DATABASE: healthservice
-          MYSQL_HOST: mysql
+          MYSQL_HOST: localhost
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
@@ -67,7 +67,7 @@ jobs:
           MYSQL_PASSWORD: admin
           MYSQL_DATABASE: healthservice
           MYSQL_PORT: 3306
-          MYSQL_HOST: mysql
+          MYSQL_HOST: localhost
         run: |
           cd api
           ./gradlew test
