@@ -38,10 +38,11 @@ jobs:
       - uses: actions/setup-node@main
         with:
           node-version: "16"
-      - name: Install dependencies
-        run: npm ci
-      - name: Unit tests w/ coverage
-        run: npm run test:coverage
+      - name: Install dependencies and run unit tests
+        run: |
+          cd ui
+          npm ci
+          npm run test:coverage
 
       - name: Upload UI Code Coverage Report
         uses: actions/upload-artifact@v2

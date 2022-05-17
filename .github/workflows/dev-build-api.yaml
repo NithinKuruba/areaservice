@@ -46,7 +46,9 @@ jobs:
           gradle-version: 6.8.3
 
       - name: Execute Gradle Unit Tests
-        run: ./gradlew test
+        run: |
+          cd api
+          ./gradlew test
 
       - name: Login to Github Container Registry
         run: |
