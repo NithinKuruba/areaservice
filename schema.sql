@@ -16,8 +16,8 @@ CREATE TABLE `response` (
 );
 
 CREATE TABLE `chsa` (
-    `sysid` int PRIMARY KEY NOT NULL,
+    `sysid` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `areacode` varchar(4) NOT NULL,
     `areaname` varchar(100) NOT NULL,
-    `ojectid` int 
+    `objectid` int 
 );

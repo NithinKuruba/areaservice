@@ -1,7 +1,5 @@
 package com.swu.areaservice.data;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,33 +16,32 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "request")
+@Table(name = "chsa")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Builder(toBuilder = true)
-public class Request {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	@Getter
-	@Setter
-	private Long id;
+public class Chsa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sysid", unique = true, nullable = false)
+    @Getter
+    @Setter
+    private int sysid;
 
-	@Column(name = "featureid")
-	@Getter
-	@Setter
-	private String featureid;
+    @Column(name = "areacode")
+    @Getter
+    @Setter
+    private String areacode;
 
-	@Column(name = "coordinate")
-	@Getter
-	@Setter
-	private String coordinate;
+    @Column(name = "areaname")
+    @Getter
+    @Setter
+    private String areaname;
 
-	@Column(name = "requesttime")
-	@Getter
-	@Setter
-	private Timestamp requesttime;
-
+    @Column(name = "objectid")
+    @Getter
+    @Setter
+    private int objectid;
 }

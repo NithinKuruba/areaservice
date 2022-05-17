@@ -18,33 +18,38 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "request")
+@Table(name = "response")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Builder(toBuilder = true)
-public class Request {
+public class Response {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "responseid", unique = true, nullable = false)
 	@Getter
 	@Setter
 	private Long id;
 
-	@Column(name = "featureid")
+	@Column(name = "requestid")
 	@Getter
 	@Setter
-	private String featureid;
+	private Long requestid;
 
-	@Column(name = "coordinate")
+	@Column(name = "timestamp")
 	@Getter
 	@Setter
-	private String coordinate;
+	private Timestamp timestamp;
 
-	@Column(name = "requesttime")
+	@Column(name = "chsaid")
 	@Getter
 	@Setter
-	private Timestamp requesttime;
+	private int chsaid;
+
+	@Column(name = "crs")
+	@Getter
+	@Setter
+	private String crs;
 
 }
