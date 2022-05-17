@@ -28,7 +28,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
-        options: -v "$PWD/schema.sql":/docker-entrypoint-initdb.d/schema.sql
+        options: -v "${{ github.workspace }}/schema.sql":/docker-entrypoint-initdb.d/schema.sql
 
     steps:
       - name: Docker meta
