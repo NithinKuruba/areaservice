@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - "ui/**"
+      - ".github/workflows/*-ui.yaml"
 
 env:
   REGISTRY: ghcr.io
