@@ -37,7 +37,7 @@ jobs:
 
       - name: Setup MySQL instance
         run: |
-          docker run --rm --name mysql -v "$PWD/schema.sql":/docker-entrypoint-initdb.d/schema.sql -e MYSQL_HOST=localhost -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_DATABASE=healthservice -d mysql:latest --default-authentication-plugin=mysql_native_password
+          docker run --rm --name mysql -v "$PWD/schema.sql":/docker-entrypoint-initdb.d/schema.sql -e MYSQL_HOST=localhost -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_DATABASE=healthservice -p 3306:3306 -d mysql:latest --default-authentication-plugin=mysql_native_password
 
       - uses: actions/setup-java@v2
         with:
