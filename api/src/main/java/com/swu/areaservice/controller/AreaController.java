@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swu.areaservice.data.Request;
 import com.swu.areaservice.model.ChsaAreaCode;
 import com.swu.areaservice.model.WfsResponse;
 import com.swu.areaservice.service.GeoService;
@@ -18,13 +19,15 @@ import com.swu.areaservice.service.GeoService;
 @RequestMapping("/area")
 public class AreaController {
 
-	Logger logger = LoggerFactory.getLogger(AreaController.class);
+	private Logger logger = LoggerFactory.getLogger(AreaController.class);
 
 	@Autowired
 	GeoService geoService;
 
 	@GetMapping("/{coordinate}")
 	public ResponseEntity<ChsaAreaCode> getAreaAndCodeByLocation(@PathVariable("coordinate") String coordinate) {
+
+		Request request = geoService.addNewRequest(coordinate);
 
 		if (coordinate.matches("-1\\d{2}\\.\\d{1,7}\\+\\d{2}\\.\\d{1,7}")) {
 
@@ -37,6 +40,8 @@ public class AreaController {
 							wfsResponse.getFeatures().get(0).getProperties().get("CMNTY_HLTH_SERV_AREA_CODE"));
 					chsaAreaCode.setCMNTY_HLTH_SERV_AREA_NAME(
 							wfsResponse.getFeatures().get(0).getProperties().get("CMNTY_HLTH_SERV_AREA_NAME"));
+
+					geoService.addNewResponse(request.getId(), wfsResponse);
 				} else {
 					return ResponseEntity
 							.status(HttpStatus.BAD_REQUEST)
@@ -45,6 +50,7 @@ public class AreaController {
 				return ResponseEntity
 						.status(HttpStatus.OK).body(chsaAreaCode);
 			} catch (Exception e) {
+				logger.error("Service is not available", e);
 				return ResponseEntity
 						.status(HttpStatus.SERVICE_UNAVAILABLE)
 						.body(null);

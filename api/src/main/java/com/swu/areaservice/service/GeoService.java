@@ -24,7 +24,7 @@ import com.swu.areaservice.repository.ResponseRepository;
 @Service
 public class GeoService {
 
-	Logger logger = org.slf4j.LoggerFactory.getLogger(GeoService.class);
+	private Logger logger = org.slf4j.LoggerFactory.getLogger(GeoService.class);
 
 	private WebClient webclient;
 
@@ -46,7 +46,7 @@ public class GeoService {
 
 	static final String SEARCH_URL = "))&propertyName=CMNTY_HLTH_SERV_AREA_CODE%2CCMNTY_HLTH_SERV_AREA_NAME&outputFormat=application%2Fjson";
 
-	private Request addNewRequest(String coordinate) throws Exception {
+	public Request addNewRequest(String coordinate) {
 
 		Date date = new Date();
 
@@ -56,10 +56,9 @@ public class GeoService {
 		request.setRequesttime(new Timestamp(date.getTime()));
 
 		return requestRepository.save(request);
-
 	}
 
-	private void addNewResponse(Long requestId, WfsResponse wfsResponse) throws Exception {
+	public void addNewResponse(Long requestId, WfsResponse wfsResponse) {
 
 		if (wfsResponse != null && wfsResponse.getFeatures().size() > 0) {
 			Response response = new Response();
@@ -87,29 +86,29 @@ public class GeoService {
 		}
 	}
 
-	public WfsResponse getFeaturesPlainJSON(String coordinates) throws Exception {
-
-		Request request = addNewRequest(coordinates);
+	public WfsResponse getFeaturesPlainJSON(String coordinates) {
 
 		WfsResponse wfsResponse = new WfsResponse();
 
-		DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(BASE_URL);
-		factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
+		try {
+			DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(BASE_URL);
+			factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
 
-		this.webclient = WebClient.builder()
-				.uriBuilderFactory(factory)
-				.baseUrl(BASE_URL)
-				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build();
+			this.webclient = WebClient.builder()
+					.uriBuilderFactory(factory)
+					.baseUrl(BASE_URL)
+					.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build();
 
-		wfsResponse = this.webclient.get()
-				.uri(GEO_URL + coordinates + SEARCH_URL)
-				.accept(MediaType.APPLICATION_JSON)
-				.acceptCharset(StandardCharsets.UTF_8)
-				.retrieve()
-				.bodyToMono(WfsResponse.class)
-				.block();
-
-		addNewResponse(request.getId(), wfsResponse);
+			wfsResponse = this.webclient.get()
+					.uri(GEO_URL + coordinates + SEARCH_URL)
+					.accept(MediaType.APPLICATION_JSON)
+					.acceptCharset(StandardCharsets.UTF_8)
+					.retrieve()
+					.bodyToMono(WfsResponse.class)
+					.block();
+		} catch (Exception ex) {
+			logger.error("Server is not responding", ex);
+		}
 
 		return wfsResponse;
 	}
